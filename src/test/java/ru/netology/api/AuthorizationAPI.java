@@ -1,19 +1,23 @@
 package ru.netology.api;
 
 import io.restassured.http.ContentType;
+import org.json.JSONObject;
 import ru.netology.data.DataHelper;
 import static io.restassured.RestAssured.given;
 
 public class AuthorizationAPI {
 
-    public void generationCode() {
+    public AuthorizationAPI() {
+    }
+
+    public static void generationCode(DataHelper.AuthInfo authInfo) {
+        JSONObject json = new JSONObject();
+        json.put("login", authInfo.getLogin());
+        json.put("password", authInfo.getPassword());
         given()
                 .baseUri("http://localhost:9999/api")
                 .contentType(ContentType.JSON)
-                .body("{\n" +
-                        "  \"login\": \"vasya\",\n" +
-                        "  \"password\": \"qwerty123\"\n" +
-                        "}")
+                .body(json.toString())
                 .when()
                 .log()
                 .all()
@@ -25,12 +29,14 @@ public class AuthorizationAPI {
         ;
     }
 
-    public String getToken(String code) {
-        DataHelper.VerificationCodeAPI bodyRequest = new DataHelper.VerificationCodeAPI("vasya", code);
+    public static String getToken(String code, DataHelper.AuthInfo authInfo) {
+        JSONObject json = new JSONObject();
+        json.put("login", authInfo.getLogin());
+        json.put("code", code);
         return given()
                 .baseUri("http://localhost:9999/api/auth")
                 .contentType(ContentType.JSON)
-                .body(bodyRequest)
+                .body(json.toString())
                 .when()
                 .log()
                 .all()

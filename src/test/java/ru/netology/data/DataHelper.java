@@ -16,15 +16,15 @@ public class DataHelper {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class VerificationCode {
-        String code;
+    public static class AuthInfo {
+        String login;
+        String password;
     }
 
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class VerificationCodeAPI {
-        String login;
+    public static class VerificationCode {
         String code;
     }
 

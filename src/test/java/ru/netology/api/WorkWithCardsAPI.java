@@ -7,7 +7,10 @@ import static io.restassured.RestAssured.given;
 
 public class WorkWithCardsAPI {
 
-    public DataHelper.CardInfo[] getInfoCards(String token) {
+    public WorkWithCardsAPI() {
+    }
+
+    public static DataHelper.CardInfo[] getInfoCards(String token) {
         return given()
                 .baseUri("http://localhost:9999/api")
                 .contentType(ContentType.JSON)
@@ -25,7 +28,7 @@ public class WorkWithCardsAPI {
                 ;
     }
 
-    public String getNumberCard(String token, int index) {
+    public static String getNumberCard(String token, int index) {
         String numberCard = "";
         var cards = getInfoCards(token);
         String hiddenNumbercards = cards[index].getNumber();
@@ -38,7 +41,7 @@ public class WorkWithCardsAPI {
         return numberCard;
     }
 
-    public void transfer(String token, String from, String to, int amount) {
+    public static void transfer(String token, String from, String to, int amount) {
         JSONObject json = new JSONObject();
         json.put("amount", amount);
         json.put("from", from);
